@@ -1,7 +1,9 @@
 // Importing required dependencies
 import React, { useState } from 'react';
-import api from '../api';
+import api from '../Utils/api';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 
 // Defining interface for Login Data
 interface LoginData {
@@ -11,6 +13,8 @@ interface LoginData {
 
 // Navbar component
 const Navbar = () => {
+  const navigate = useNavigate();
+
   // State for login data
   const [loginData, setLoginData] = useState<LoginData>({ identifier: '', password: '' });
 
@@ -22,10 +26,12 @@ const Navbar = () => {
   // Function to handle login
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+
     try {
       // Making API call to authenticate the user
       const response = await api.post('/auth/local', loginData);
       console.log(response.data);
+      
 
       // Storing user data in local storage
       localStorage.setItem('username', response.data.user.username);
@@ -34,8 +40,9 @@ const Navbar = () => {
 
       // Storing JWT token as an HttpOnly cookie
       Cookies.set('token', response.data.jwt, { expires: 7, secure: true, sameSite: 'strict', httpOnly: true });
-        
       console.log("login");
+      navigate('/dashboard');
+
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -44,7 +51,7 @@ const Navbar = () => {
   // Rendering the Navbar
   return (
     <nav>
-      <div>Logo</div>
+      <div>jfdas</div>
       <form onSubmit={handleLogin}>
         <input type="text" name="identifier" onChange={handleInputChange} value={loginData.identifier} placeholder="identifier" />
         <input type="password" name="password" onChange={handleInputChange} value={loginData.password} placeholder="Password" />

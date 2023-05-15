@@ -1,23 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-
-import './App.css';
 import Navbar from './Components/Navbar';
 import RegistrationForm from './Components/RegistrationForm';
+import Dashboard from './Components/Dashboard';
 
 const App = () => {
   return (
-    <div className="App">
-      <Navbar />
-      <div className="content">
-        <div className="left-side">
-          {/* Add any content for the left side */}
-        </div>
-        <div className="right-side">
-          <RegistrationForm />
-        </div>
+    <Router>
+      <div>
+        <Navbar />
+        <RegistrationForm />
+        <Routes>
+          {/* <Route path="/register" element={<RegistrationForm />} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 };
 

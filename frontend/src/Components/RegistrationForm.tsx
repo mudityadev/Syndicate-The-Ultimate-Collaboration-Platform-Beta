@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import api from '../api';
+import api from '../Utils/api';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 // import { useHistory } from 'react-router-dom';
 // Defining interface for Registration Data
 interface RegistrationData {
@@ -11,6 +13,8 @@ interface RegistrationData {
 
 // RegistrationForm component
 const RegistrationForm = () => {
+  const navigate = useNavigate();
+
   // State for registration data
   const [registrationData, setRegistrationData] = useState<RegistrationData>({ email: '', username: '', password: '' });
 
@@ -22,6 +26,7 @@ const RegistrationForm = () => {
   // Function to handle registration
   const handleRegistration = async (event: React.FormEvent) => {
     event.preventDefault();
+
     try {
       // Making API call to register the user
       const response = await api.post('/auth/local/register', registrationData);
@@ -36,6 +41,8 @@ const RegistrationForm = () => {
       Cookies.set('token', response.data.jwt, { expires: 7, secure: true, sameSite: 'strict', httpOnly: true });
       
       console.log("Dashboard");
+      navigate('/dashboard');
+
     } catch (error) {
       console.error('Registration failed:', error);
     }
