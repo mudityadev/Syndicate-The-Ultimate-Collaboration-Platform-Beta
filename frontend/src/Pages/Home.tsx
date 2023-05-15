@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Navbar from '../Components/Navbar';
+import RegistrationForm from '../Components/RegistrationForm';
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <div>
+      <Navbar />
+      <RegistrationForm />
+    </div>
+  );
+};
 
-export default Home
+export default Home;
